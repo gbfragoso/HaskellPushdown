@@ -1,7 +1,9 @@
+-- Replace the top of stack (b) with content of (a)
 replace :: [a] -> [a] -> [a]
 replace a b = a ++ (drop 1 b)
 
--- Receive an pair (stack,word) and return an tuple with result of operation
+-- Receive an pair (stack , word) and checks the existence of an production of type stack (top) -> word.
+-- If true, return an tuple with result of operation
 grammarRules :: [Char] -> [Char] -> ([Char],[Char])
 grammarRules (x:xs) (y:ys)
     | x == y = (xs,ys)
@@ -14,9 +16,9 @@ grammarRules (x:xs) (y:ys)
     | x == 'A' && y == '-' = (replace ['-'] (x:xs),(y:ys))
     | x == 'A' && y == '*' = (replace ['*'] (x:xs),(y:ys))
     | x == 'A' && y == '/' = (replace ['/'] (x:xs),(y:ys))
-    |otherwise = ([],y:ys)
+    | otherwise = ([],y:ys)
 
--- Receive an pair (stack,word) and return True when reach ([],[]) 
+-- Receive an pair (stack,word) and return True when reach ([],[])
 pushdown :: ([Char],[Char]) -> Bool
 pushdown ("","") = True
 pushdown ("", _) = False
